@@ -12,13 +12,24 @@ students = [
   "Joffrey Baratheon",
   "Norman Bates" ]
 
-# Prints the list of students in Villains Academy
-puts "The students of Villains Academy"
-puts "-----------"
-
-students.each do |student_name|
-  puts student_name
+# Method to print the standard header for students
+def print_header
+  puts "The students of Villains Academy"
+  puts "-----------"
 end
 
-# Gives the total number of students in Villains Academy
-puts "Overall we have #{students.count} great students"
+# Method to print all the names in an array of students
+def print(names)
+    names.each do |name|
+      puts name
+    end
+end
+
+# Method to print the standard footer for students summarising total number of students
+def print_footer(names)
+  puts "Overall we have #{names.count} great students"
+end
+
+print_header
+print(students)
+print_footer(students)
