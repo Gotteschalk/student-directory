@@ -47,7 +47,26 @@ def input_students
   students
 end
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Enter students"
+    puts "2. Print the students"
+    puts "3. Exit program"
+    input = gets.chomp
+    case input
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "3"
+      exit
+    else
+      puts "I don't know what you want. Please try again."
+    end
+  end
+end
+
+interactive_menu
