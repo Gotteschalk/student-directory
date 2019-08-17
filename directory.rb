@@ -1,17 +1,50 @@
-# Lists the names of students in the Villains Academy in an array
-students = [
-  { name: "Dr. Hannibal Lecter", cohort: :November },
-  { name: "Darth Vader", cohort: :November },
-  { name: "Nurse Ratched", cohort: :November },
-  { name: "Michael Corleone", cohort: :November },
-  { name: "Alex DeLarge", cohort: :November },
-  { name: "The wicked Witch of the West", cohort: :November },
-  { name: "Terminator", cohort: :November },
-  { name: "Freddy Krueger", cohort: :November },
-  { name: "The Joker", cohort: :November },
-  { name: "Joffrey Baratheon", cohort: :November },
-  { name: "Norman Bates", cohort: :November }
-  ]
+@students = []
+
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  name = gets.chomp
+  while !name.empty? do
+    @students << {name: name, cohort: :november}
+    puts "We now have #{@students.count} students"
+    name = gets.chomp
+  end
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Enter students"
+  puts "2. Print the students"
+  puts "3. Save students"
+  puts "4. Exit program"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(input)
+  case input
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "4"
+      exit
+    else
+      puts "I don't know what you want. Please try again."
+  end
+end
 
 # Method to print the standard header for students
 def print_header
@@ -33,51 +66,14 @@ def print_footer
   puts "Overall we have #{@students.count} great students"
 end
 
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  students = []
-  name = gets.chomp
-  while !name.empty? do
-    students << {name: name, cohort: :november}
-    puts "We now have #{students.count} students"
-    name = gets.chomp
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [ student[:name], student[:cohort] ]
+    csv_line = student_data.join ","
+    file.puts csv_line
   end
-  students
-end
-
-@students = []
-
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
-  end
-end
-
-def print_menu
-  puts "1. Enter students"
-  puts "2. Print the students"
-  puts "3. Exit program"
-end
-
-def print_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-def process(input)
-  case input
-    when "1"
-      @students = input_students
-    when "2"
-      print_students
-    when "3"
-      exit
-    else
-      puts "I don't know what you want. Please try again."
-  end
+  file.close
 end
 
 interactive_menu
