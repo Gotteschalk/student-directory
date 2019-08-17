@@ -20,17 +20,17 @@ def print_header
 end
 
 # Method to print all the names in an array of students
-def print(names)
+def print_students_list
     number = 1
-    names.each do |student|
+    @students.each do |student|
       puts "#{number}. #{student[:name]}, #{student[:cohort]} cohort"
       number += 1
     end
 end
 
 # Method to print the standard footer for students summarising total number of students
-def print_footer(names)
-  puts "Overall we have #{names.count} great students"
+def print_footer
+  puts "Overall we have #{@students.count} great students"
 end
 
 def input_students
@@ -38,7 +38,6 @@ def input_students
   puts "To finish, just hit return twice"
   students = []
   name = gets.chomp
-
   while !name.empty? do
     students << {name: name, cohort: :november}
     puts "We now have #{students.count} students"
@@ -47,25 +46,37 @@ def input_students
   students
 end
 
+@students = []
+
 def interactive_menu
-  students = []
   loop do
-    puts "1. Enter students"
-    puts "2. Print the students"
-    puts "3. Exit program"
-    input = gets.chomp
-    case input
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Enter students"
+  puts "2. Print the students"
+  puts "3. Exit program"
+end
+
+def print_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(input)
+  case input
     when "1"
-      students = input_students
+      @students = input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      print_students
     when "3"
       exit
     else
       puts "I don't know what you want. Please try again."
-    end
   end
 end
 
